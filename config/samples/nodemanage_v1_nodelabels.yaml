@@ -1,0 +1,7 @@
+apiVersion: nodemanage.openshift.io/v1
+kind: NodeLabels
+metadata:
+  name: nodelabels-sample
+spec:
+  # Add fields here
+  foo: bar

@@ -1,0 +1,11 @@
+domain: openshift.io
+layout: go.kubebuilder.io/v2
+projectName: node-manage-operator
+repo: github.com/rh-nfv-int/node-manage-operator
+resources:
+- group: nodemanage
+  kind: NodeLabels
+  version: v1
+version: 3-alpha
+plugins:
+  go.sdk.operatorframework.io/v2-alpha: {}
