@@ -49,6 +49,10 @@ spec:
               type: array
             mode:
               type: string
+            nodeSelectorLabels:
+              additionalProperties:
+                type: string
+              type: object
           type: object
         status:
           description: NodeLabelsStatus defines the observed state of NodeLabels

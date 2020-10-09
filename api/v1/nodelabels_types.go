@@ -22,8 +22,9 @@ import (
 
 // NodeLabelsSpec defines the desired state of NodeLabels
 type NodeLabelsSpec struct {
-	LabelGroup []LabelGroup   `json:"labelGroup,omitempty"`
-	Mode       LabelGroupMode `json:"mode,omitempty"`
+	NodeSelectorLabels map[string]string `json:"nodeSelectorLabels,omitempty"`
+	LabelGroup         []LabelGroup      `json:"labelGroup,omitempty"`
+	Mode               LabelGroupMode    `json:"mode,omitempty"`
 }
 
 type LabelGroupMode string

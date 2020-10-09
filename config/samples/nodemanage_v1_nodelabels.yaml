@@ -3,5 +3,10 @@ kind: NodeLabels
 metadata:
   name: nodelabels-sample
 spec:
-  # Add fields here
-  foo: bar
+  nodeSelectorLabels:
+    node-role.kubernetes.io/worker: ""
+  labelGroup:
+    - count: 1
+      labels:
+        new: '1'
+  mode: all

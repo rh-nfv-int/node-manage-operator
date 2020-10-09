@@ -27,7 +27,7 @@ else
 GOBIN=$(shell go env GOBIN)
 endif
 
-all: manager
+all: manager docker-build docker-push
 
 # Run tests
 ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
