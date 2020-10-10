@@ -27,7 +27,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    operators.operatorframework.io/builder: operator-sdk-v1.0.0+git
+    operators.operatorframework.io/builder: operator-sdk-v1.0.1
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
   name: node-manage-operator.v0.0.1
   namespace: placeholder
@@ -93,6 +93,7 @@ spec:
             metadata:
               labels:
                 control-plane: controller-manager
+                example-cnf-type: node-manage-operator
             spec:
               containers:
               - args:
@@ -142,9 +143,9 @@ spec:
         serviceAccountName: default
     strategy: deployment
   installModes:
-  - supported: false
+  - supported: true
     type: OwnNamespace
-  - supported: false
+  - supported: true
     type: SingleNamespace
   - supported: false
     type: MultiNamespace

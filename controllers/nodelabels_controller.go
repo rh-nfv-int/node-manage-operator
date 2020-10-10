@@ -70,11 +70,19 @@ func (r *NodeLabelsReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 		return ctrl.Result{}, err
 	}
 
+	newLabels := map[string]string{}
+
 	// Check if there are enough nodes for applying label group
 	count := 0
 	for _, group := range nodeLabels.Spec.LabelGroup {
 		for k, v := range group.Labels {
 			log.Info("Requested labels", k, v)
+			if _, ok := newLabels[k]; ok {
+				err = fmt.Errorf("Label key %s is duplicate", k)
+				log.Error(err, "Duplicate label")
+				return ctrl.Result{}, err
+			}
+			newLabels[k] = v
 		}
 		count += group.Count
 	}
@@ -83,6 +91,28 @@ func (r *NodeLabelsReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 	if len(nodeList.Items) < count {
 		err = fmt.Errorf("Not enough nodes to apply label group")
 		log.Error(err, "Node request for applying labels and available nodes mismatch")
+		return ctrl.Result{}, err
+	}
+
+	foundCount := 0
+	for _, node := range nodeList.Items {
+		found := checkNodeLabels(node.Labels, newLabels)
+		if found {
+			log.Info("Label exists on node", "name", node.Name)
+			foundCount++
+		}
+	}
+
+	if count == foundCount {
+		// Applied already, nothing to do
+		log.Info("Labels applied to all required nodes already")
+		return ctrl.Result{}, nil
+	}
+
+	// TODO: Handle this case by cleaning all nodes and re-applying the labels
+	if foundCount > 0 {
+		err = fmt.Errorf("Provided labels are applied partially, clean up not implemented")
+		log.Error(err, "Labels applied partially, cleanning node handled")
 		return ctrl.Result{}, err
 	}
 
@@ -101,6 +131,15 @@ func (r *NodeLabelsReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 	}
 
 	return ctrl.Result{}, nil
+}
+
+func checkNodeLabels(nodeLabels, newLabels map[string]string) bool {
+	for k, _ := range newLabels {
+		if _, ok := nodeLabels[k]; ok {
+			return true
+		}
+	}
+	return false
 }
 
 func (r *NodeLabelsReconciler) SetupWithManager(mgr ctrl.Manager) error {
