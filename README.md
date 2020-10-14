@@ -52,8 +52,8 @@ spec:
   labelGroup:
     - count: 1
       labels:
-        examplecnf.openshift.io/trex-new: ""
+        examplecnf.openshift.io/trex: ""
     - count: 2
       labels:
-        examplecnf.openshift.io/testpmd-new: ""
+        examplecnf.openshift.io/testpmd: ""
 ```
