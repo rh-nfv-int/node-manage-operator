@@ -1,8 +1,10 @@
 # Current Operator version
-VERSION ?= 0.1.0
+VERSION ?= 0.1.2
 REGISTRY ?= quay.io
 ORG ?= krsacme
 DEFAULT_CHANNEL ?= alpha
+
+CONTAINER_CLI ?= docker
 
 # Default bundle image tag
 BUNDLE_IMG ?= $(REGISTRY)/$(ORG)/node-manage-operator-bundle:v$(VERSION)
@@ -75,11 +77,8 @@ generate: controller-gen
 
 # Build the docker image
 docker-build: test
-	docker build . -t ${IMG}
-
-# Push the docker image
-docker-push:
-	docker push ${IMG}
+	${CONTAINER_CLI} build . -t ${IMG}
+	${CONTAINER_CLI} push ${IMG}
 
 # find or download controller-gen
 # download controller-gen if necessary
@@ -124,4 +123,4 @@ bundle: manifests
 # Build the bundle image.
 .PHONY: bundle-build
 bundle-build:
-	docker build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+	${CONTAINER_CLI} build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
