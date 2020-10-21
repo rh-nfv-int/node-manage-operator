@@ -1,5 +1,5 @@
 # Current Operator version
-VERSION ?= 0.1.2
+VERSION ?= 0.2.0
 REGISTRY ?= quay.io
 ORG ?= krsacme
 DEFAULT_CHANNEL ?= alpha
@@ -29,7 +29,7 @@ else
 GOBIN=$(shell go env GOBIN)
 endif
 
-all: manager docker-build docker-push
+all: manager docker-build
 
 # Run tests
 ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
@@ -124,3 +124,4 @@ bundle: manifests
 .PHONY: bundle-build
 bundle-build:
 	${CONTAINER_CLI} build -f bundle.Dockerfile -t $(BUNDLE_IMG) .
+	${CONTAINER_CLI} push $(BUNDLE_IMG)

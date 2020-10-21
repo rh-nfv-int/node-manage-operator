@@ -29,7 +29,7 @@ metadata:
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.0.1
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
-  name: node-manage-operator.v0.1.2
+  name: node-manage-operator.v0.2.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -100,7 +100,7 @@ spec:
                 - --enable-leader-election
                 command:
                 - /manager
-                image: quay.io/krsacme/node-manage-operator:v0.1.2
+                image: quay.io/krsacme/node-manage-operator:v0.2.0
                 imagePullPolicy: Always
                 name: manager
                 resources:
@@ -163,4 +163,4 @@ spec:
   maturity: alpha
   provider:
     name: Red Hat
-  version: 0.1.2
+  version: 0.2.0
