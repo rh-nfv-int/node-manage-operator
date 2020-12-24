@@ -76,12 +76,7 @@ func (r *NodeLabelsReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 	count := 0
 	for _, group := range nodeLabels.Spec.LabelGroup {
 		for k, v := range group.Labels {
-			log.Info("Requested labels", k, v)
-			if _, ok := newLabels[k]; ok {
-				err = fmt.Errorf("Label key %s is duplicate", k)
-				log.Error(err, "Duplicate label")
-				return ctrl.Result{}, err
-			}
+			log.Info("Requested labels: ", k, v)
 			newLabels[k] = v
 		}
 		count += group.Count
@@ -103,7 +98,7 @@ func (r *NodeLabelsReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 		}
 	}
 
-	if count == foundCount {
+	if count <= foundCount {
 		// Applied already, nothing to do
 		log.Info("Labels applied to all required nodes already")
 		return ctrl.Result{}, nil

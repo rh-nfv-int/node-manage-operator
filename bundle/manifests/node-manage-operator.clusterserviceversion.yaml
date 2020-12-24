@@ -27,7 +27,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    operators.operatorframework.io/builder: operator-sdk-v1.0.1
+    operators.operatorframework.io/builder: operator-sdk-v1.2.0
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
   name: node-manage-operator.v0.2.0
   namespace: placeholder
@@ -100,7 +100,7 @@ spec:
                 - --enable-leader-election
                 command:
                 - /manager
-                image: quay.io/krsacme/node-manage-operator:v0.2.0
+                image: quay.io/rh-nfv-int/node-manage-operator:v0.2.0
                 imagePullPolicy: Always
                 name: manager
                 resources:
